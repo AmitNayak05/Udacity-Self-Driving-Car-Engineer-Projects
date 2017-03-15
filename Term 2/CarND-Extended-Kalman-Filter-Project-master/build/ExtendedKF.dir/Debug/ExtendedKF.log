@@ -1,0 +1,5 @@
+﻿cl : Command line warning D9002: ignoring unknown option '-std=c++0x'
+  FusionEKF.cpp
+C:\Users\aanay\Udaity Term 2\Kalman\CarND-Extended-Kalman-Filter-Project-master\src\FusionEKF.cpp(139): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  ExtendedKF.vcxproj -> C:\Users\aanay\Udaity Term 2\Kalman\CarND-Extended-Kalman-Filter-Project-master\build\Debug\ExtendedKF.exe
+  ExtendedKF.vcxproj -> C:/Users/aanay/Udaity Term 2/Kalman/CarND-Extended-Kalman-Filter-Project-master/build/Debug/ExtendedKF.pdb (Full PDB)
