@@ -1,0 +1,2 @@
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
+Debug|x64|C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\build\CMakeFiles\3.6.1\CompilerIdCXX\|
