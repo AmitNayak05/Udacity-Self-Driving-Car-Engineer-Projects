@@ -22,12 +22,7 @@ UKF::UKF() {
   x_ = VectorXd(5);
 
   // initial covariance matrix
-  P_ = MatrixXd(5, 5);
-  P_ << 0.0043, -0.0013, 0.0030, -0.0022, -0.0020,
-	  -0.0013, 0.0077, 0.0011, 0.0071, 0.0060,
-	  0.0030, 0.0011, 0.0054, 0.0007, 0.0008,
-	  -0.0022, 0.0071, 0.0007, 0.0098, 0.0100,
-	  -0.0020, 0.0060, 0.0008, 0.0100, 0.0123;
+  P_ = MatrixXd::Identity(5, 5);
 
   x_pred = VectorXd(5);
   x_pred.fill(0.0);
@@ -35,10 +30,10 @@ UKF::UKF() {
   P_pred = MatrixXd(5, 5);
   P_pred.fill(0.0);
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 5.0;
+  std_a_ = 0.8;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 0.6;
+  std_yawdd_ = 1.0;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
@@ -204,9 +199,17 @@ void UKF::Prediction(double delta_t) {
 	P_aug_(5, 5) = std_a_*std_a_;
 	P_aug_(6, 6) = std_yawdd_*std_yawdd_;
 
-	MatrixXd Xsig_aug;
+	MatrixXd Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
 
-	AugmentedSigmaPoints(&Xsig_aug);
+	MatrixXd L = P_aug_.llt().matrixL();
+	//create augmented sigma points
+	Xsig_aug.col(0) = x_aug_;
+	for (int i = 0; i< n_aug_; i++)
+	{
+		Xsig_aug.col(i + 1) = x_aug_ + sqrt(lambda_aug_ + n_aug_) * L.col(i);
+		Xsig_aug.col(i + 1 + n_aug_) = x_aug_ - sqrt(lambda_aug_ + n_aug_) * L.col(i);
+	}
+
 
 	for (int i = 0; i< 2 * n_aug_ + 1; i++)
 	{
@@ -508,40 +511,4 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 
 	NIS_radar_ = z_diff.transpose()*S.inverse()*z_diff;
 	//cout << "NIS_radar_ = " << NIS_radar_ << endl;
-}
-/**
-* GenerateSigmaPoints
-* Find sigma Points
-*/
-void UKF::GenerateSigmaPoints(MatrixXd* Xsig_out) {
-	MatrixXd Xsig = MatrixXd(n_x_, 2 * n_x_ + 1);
-
-	//calculate square root of P
-	MatrixXd A = P_.llt().matrixL();
-
-	//set sigma points as columns of matrix Xsig
-	Xsig.col(0) = x_;
-	for (int i = 0; i < n_x_; i++)
-	{
-		Xsig.col(i + 1) = x_ + sqrt(lambda_ + n_x_) * A.col(i);
-		Xsig.col(i + 1 + n_x_) = x_ - sqrt(lambda_ + n_x_) * A.col(i);
-	}
-
-	*Xsig_out = Xsig;
-}
-
-void UKF::AugmentedSigmaPoints(MatrixXd* Xsig_out) {
-
-	//create sigma point matrix
-	MatrixXd Xsig_aug = MatrixXd(n_aug_, 2 * n_aug_ + 1);
-
-	MatrixXd L = P_aug_.llt().matrixL();
-	//create augmented sigma points
-	Xsig_aug.col(0) = x_aug_;
-	for (int i = 0; i< n_aug_; i++)
-	{
-		Xsig_aug.col(i + 1) = x_aug_ + sqrt(lambda_aug_ + n_aug_) * L.col(i);
-		Xsig_aug.col(i + 1 + n_aug_) = x_aug_ - sqrt(lambda_aug_ + n_aug_) * L.col(i);
-	}
-	*Xsig_out = Xsig_aug;
 }

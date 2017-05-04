@@ -104,11 +104,6 @@ public:
 
 
   /**
-  * GenerateSigmaPoints
-  * Find sigma Points
-  */
-  void UKF::GenerateSigmaPoints(MatrixXd* Xsig_out);
-  /**
    * ProcessMeasurement
    * @param meas_package The latest measurement data of either radar or laser
    */
@@ -133,11 +128,6 @@ public:
    */
   void UpdateRadar(MeasurementPackage meas_package);
 
-
-  /*
-  Augmented sigma points
-  */
-  void UKF::AugmentedSigmaPoints(MatrixXd* Xsig_out);
 };
 
 

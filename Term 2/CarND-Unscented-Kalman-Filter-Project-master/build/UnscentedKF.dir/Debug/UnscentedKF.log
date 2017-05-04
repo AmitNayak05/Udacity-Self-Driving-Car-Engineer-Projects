@@ -1,0 +1,10 @@
+﻿cl : Command line warning D9002: ignoring unknown option '-std=c++0x'
+  main.cpp
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(202): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(203): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(217): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(218): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(219): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\src\main.cpp(220): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  UnscentedKF.vcxproj -> C:\Users\aanay\Udaity Term 2\Unscented Kalman\CarND-Unscented-Kalman-Filter-Project-master\CarND-Unscented-Kalman-Filter-Project-master\build\Debug\UnscentedKF.exe
+  UnscentedKF.vcxproj -> C:/Users/aanay/Udaity Term 2/Unscented Kalman/CarND-Unscented-Kalman-Filter-Project-master/CarND-Unscented-Kalman-Filter-Project-master/build/Debug/UnscentedKF.pdb (Full PDB)

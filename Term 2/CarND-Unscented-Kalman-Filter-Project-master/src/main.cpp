@@ -238,5 +238,6 @@ int main(int argc, char* argv[]) {
 	}
 
 	cout << "Done!" << endl;
+	getchar();
 	return 0;
 }
