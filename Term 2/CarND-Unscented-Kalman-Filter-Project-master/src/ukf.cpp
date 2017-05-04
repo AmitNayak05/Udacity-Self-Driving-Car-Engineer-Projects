@@ -30,7 +30,7 @@ UKF::UKF() {
   P_pred = MatrixXd(5, 5);
   P_pred.fill(0.0);
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 0.8;
+  std_a_ = 0.5;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
   std_yawdd_ = 1.0;
@@ -132,6 +132,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 			double v_x = meas_package.raw_measurements_[2] * cos(meas_package.raw_measurements_[1]);
 			double v_y = meas_package.raw_measurements_[2] * sin(meas_package.raw_measurements_[1]);
 			//std::cout << "radar x= " << x_radar << " y= " << y_radar << " vx= " << v_x << " vy=" << v_y << endl;
+			if (fabs(x_radar) < 0.001 && fabs(y_radar) < 0.001)
+			{
+				x_radar = 0.001;
+				y_radar = 0.001;
+			}
 			x_ << x_radar, y_radar, sqrt((v_x*v_x)+ (v_y*v_y)),0,0;
 
 		}
@@ -140,7 +145,14 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 			Initialize state.
 			*/
 			std::cout << "Unscented Kalman filter laser" << endl;
-			x_ << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1], 0, 0,0;
+			double x_laser = meas_package.raw_measurements_[0];
+			double y_laser = meas_package.raw_measurements_[1];
+			if (fabs(x_laser) < 0.001 && fabs(y_laser) < 0.001)
+			{
+				x_laser = 0.001;
+				y_laser = 0.001;
+			}
+			x_ << x_laser, y_laser, 0, 0,0;
 
 		}
 
@@ -159,6 +171,12 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 
 	previous_timestamp_ = meas_package.timestamp_;
 
+	while (dt > 0.2)
+	{
+		double step = 0.1;
+		Prediction(step);
+		dt -= step;
+	}
 
 	Prediction(dt);
 
@@ -376,7 +394,16 @@ void UKF::UpdateLidar(MeasurementPackage meas_package) {
 
 	VectorXd z = VectorXd(n_z_laser);
 	//values from measurement pack
-	z << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1];
+
+	double x_laser = meas_package.raw_measurements_[0];
+	double y_laser = meas_package.raw_measurements_[1];
+	if (fabs(x_laser) < 0.001 && fabs(y_laser) < 0.001)
+	{
+		x_laser = 0.001;
+		y_laser = 0.001;
+	}
+
+	z << x_laser, y_laser;
 
 	//residual
 	VectorXd z_diff = z - z_pred;
@@ -496,7 +523,15 @@ void UKF::UpdateRadar(MeasurementPackage meas_package) {
 	VectorXd z = VectorXd(n_z_radar);
 
 	//values from measurement pack
-	z << meas_package.raw_measurements_[0], meas_package.raw_measurements_[1], meas_package.raw_measurements_[2];
+	double temp_a = meas_package.raw_measurements_[0];
+	double temp_w = meas_package.raw_measurements_[1];
+	double temp_adot = meas_package.raw_measurements_[2];
+	if (fabs(temp_a)< 0.001 && fabs(temp_w) < 0.001)
+	{
+		temp_a = 0.001;
+		temp_w = 0.001;
+	}
+	z << temp_a, temp_w, temp_adot;
 
 	//residual
 	VectorXd z_diff = z - z_pred;
