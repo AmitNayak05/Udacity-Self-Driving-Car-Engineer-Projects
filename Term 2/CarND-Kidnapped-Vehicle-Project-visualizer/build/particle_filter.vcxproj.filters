@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\aanay\Udaity Term 2\Localization\CarND-Kidnapped-Vehicle-Project-visualizer\CarND-Kidnapped-Vehicle-Project-visualizer\src\particle_filter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\aanay\Udaity Term 2\Localization\CarND-Kidnapped-Vehicle-Project-visualizer\CarND-Kidnapped-Vehicle-Project-visualizer\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\aanay\Udaity Term 2\Localization\CarND-Kidnapped-Vehicle-Project-visualizer\CarND-Kidnapped-Vehicle-Project-visualizer\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{BA1E034E-E49F-314A-9808-856393801330}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

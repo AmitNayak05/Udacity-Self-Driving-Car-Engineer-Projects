@@ -1,0 +1,34 @@
+﻿  particle_filter.cpp
+C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xutility(2316): warning C4244: 'argument': conversion from 'double' to 'const float', possible loss of data
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xutility(2335): note: see reference to function template instantiation '_OutIt std::_Copy_unchecked1<_InIt,_OutIt>(_InIt,_InIt,_OutIt,std::_General_ptr_iterator_tag)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<float,char,std::char_traits<char>>,
+              _InIt=double *
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xutility(2344): note: see reference to function template instantiation '_OutIt std::_Copy_unchecked<_InIt,_Iter>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<float,char,std::char_traits<char>>,
+              _InIt=double *,
+              _Iter=std::ostream_iterator<float,char,std::char_traits<char>>
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xutility(2364): note: see reference to function template instantiation '_OutIt std::_Copy_no_deprecate1<double*,_OutIt>(_InIt,_InIt,_OutIt,std::input_iterator_tag,std::_Any_tag)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<float,char,std::char_traits<char>>,
+              _InIt=double *
+          ]
+  C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include\xutility(2373): note: see reference to function template instantiation '_OutIt std::_Copy_no_deprecate<_InIt,_OutIt>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<float,char,std::char_traits<char>>,
+              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<double>>>
+          ]
+  C:\Users\aanay\Udaity Term 2\Localization\CarND-Kidnapped-Vehicle-Project-visualizer\CarND-Kidnapped-Vehicle-Project-visualizer\src\particle_filter.cpp(230): note: see reference to function template instantiation '_OutIt std::copy<std::_Vector_iterator<std::_Vector_val<std::_Simple_types<double>>>,std::ostream_iterator<float,char,std::char_traits<char>>>(_InIt,_InIt,_OutIt)' being compiled
+          with
+          [
+              _OutIt=std::ostream_iterator<float,char,std::char_traits<char>>,
+              _InIt=std::_Vector_iterator<std::_Vector_val<std::_Simple_types<double>>>
+          ]
+  particle_filter.vcxproj -> C:\Users\aanay\Udaity Term 2\Localization\CarND-Kidnapped-Vehicle-Project-visualizer\CarND-Kidnapped-Vehicle-Project-visualizer\build\Debug\particle_filter.exe
