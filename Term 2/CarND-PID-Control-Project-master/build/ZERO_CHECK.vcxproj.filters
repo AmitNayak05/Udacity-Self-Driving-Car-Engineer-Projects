@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\aanay\Udaity Term 2\PID\CarND-PID-Control-Project-master\CarND-PID-Control-Project-master\build\CMakeFiles\2a2a2308052b54c2b30bd83eda05fd44\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5B59D384-549E-39D9-BF45-196C3D63E341}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
