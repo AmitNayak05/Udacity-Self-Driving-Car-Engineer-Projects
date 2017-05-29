@@ -15,14 +15,14 @@ error.
 The actuator input used to control the vehicle is represented by  [δ,a]. δ represents steering angle and a is used for acceleration.
 We try to predict the future state based on previous state and current actuator inputs. The update equation are:
 
-	'''
+	
 		 x_[t+1] = x[t] + v[t] * cos(psi[t]) * dt
 		 y_[t+1] = y[t] + v[t] * sin(psi[t]) * dt
 		 psi_[t+1] = psi[t] + v[t] / Lf * delta[t] * dt
 		 v_[t+1] = v[t] + a[t] * dt
 		 cte[t+1] = f(x[t]) - y[t] + v[t] * sin(epsi[t]) * dt
 		 epsi[t+1] = psi[t] - psides[t] + v[t] * delta[t] / Lf * dt
-'''
+
 
 ## Timestep Length and Elapsed Duration (N & dt)
 N is the timestep length and dt is the time elapse between actuations. T is defined as a product og N and st
@@ -34,51 +34,51 @@ A set of points is received which contains a set of 6 waypoint coordinates. Thes
 For preprocessing, we convert these coordinates to vehicle frame of reference. This is done by taking
 into consideration the translation and rotation of the vehicle. 
 
-'''
-	Trannsformed_x_value = Waypoint_x_value - car_x
-	Trannsformed_y_value = Waypoint_y_value - car_y
 
-	converted_x=(Trannsformed_x_value*cos(-psi)) - (Trannsformed_y_value*sin(-psi));
-	converted_y=(Trannsformed_y_value*cos(-psi)) + (Trannsformed_x_value*sin(-psi));
-'''
+		Trannsformed_x_value = Waypoint_x_value - car_x
+		Trannsformed_y_value = Waypoint_y_value - car_y
+
+		converted_x=(Trannsformed_x_value*cos(-psi)) - (Trannsformed_y_value*sin(-psi));
+		converted_y=(Trannsformed_y_value*cos(-psi)) + (Trannsformed_x_value*sin(-psi));
+
 
 The point given by (converted_x,converted_y) gives the point in car coordinate frame.
 
 Next we try to fit a 3rd order polynomial to these set of points. This is done by:
 
-'''
+
 	auto coeffs = polyfit(xvals, yvals, 3);
-'''
+
 
 This gives us the coefficients for the 3rd order polynomial. Then I use these points to find next 16 ponts,
 in order to display the path. Code for it is:
-'''
+
 	for(double x = 0; x <= 80; x += 5.0){
 				auto v = polyeval(coeffs, x);
 				double y_temp=v;
 				next_x_vals.push_back(x);
 				next_y_vals.push_back(y_temp);
 		}
- '''
+
  
  For MPC preprocessing, we find the current cross track error and orientation error. This is done by:
- '''
-	double cte=polyeval(coeffs, 0.0);
-	double epsi = -atan(coeffs[1])
- '''
+
+		double cte=polyeval(coeffs, 0.0);
+		double epsi = -atan(coeffs[1])
+
  
  As the vehicle is always the center around which the points are translated and rotated, the vehicle is always at (0,0)
 The state is given by 
-'''
-	state << 0, 0, 0, v, cte, epsi;
-'''
+
+		state << 0, 0, 0, v, cte, epsi;
+
 
 ## Model Predictive Control with Latency
 
 In order to make the controller work in presence of latency, an appropriate cost function was created,
 which when minimized gave us the required steering and acceleration values. 
 
-'''
+
 	fg[0] = 0;
 
 	   //The part of the cost based on the reference state.
@@ -99,21 +99,21 @@ which when minimized gave us the required steering and acceleration values.
 	      fg[0] += CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
 	      fg[0] += CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
 	    }
-'''
+
 For higher speed movement, the weight of CTE part for cst fuction was reduced to afator of 0.08 and the 
 steering increased by a factor of 1900.
 
 In order to take care of sharp turns, I find a circle fitted to three point (etreme point nd center of the waypoint polynomial)
 The radius tof the circle is also used to reduce the speed to help keep the vehicle in track.
 
-'''
+
 		if(fabs(radius)<120){
 			throttle_value=-0.01;
 			}
 		if(fabs(radius)>=120 && fabs(radius)< 260) {
 			throttle_value=0.15;
 			}
-'''
+
 
 The video of the project can be seen at:
 https://www.youtube.com/watch?v=svKQbFq5ddY
