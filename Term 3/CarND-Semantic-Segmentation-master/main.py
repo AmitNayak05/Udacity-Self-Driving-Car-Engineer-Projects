@@ -5,8 +5,11 @@ import warnings
 from distutils.version import LooseVersion
 import project_tests as tests
 from matplotlib import pyplot as plt
+from tensorflow.python.platform import gfile
+from tensorflow.core.protobuf import saved_model_pb2
+from tensorflow.python.util import compat
 
-EPOCHS = 10
+EPOCHS = 25
 BATCH_SIZE = 1
 KEEP_PROB = 0.5
 LEARNING_RATE = 0.0001
@@ -61,16 +64,16 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    conv_1x1_7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    output_7 = tf.layers.conv2d_transpose(conv_1x1_7, num_classes, 4, 2, padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7 = tf.layers.conv2d_transpose(conv_1x1_7, num_classes, 4, 2, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
-    conv_1x1_4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     input_7_4 = tf.add(output_7,conv_1x1_4)
-    output_7_4 = tf.layers.conv2d_transpose(input_7_4, num_classes, 4, 2, padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7_4 = tf.layers.conv2d_transpose(input_7_4, num_classes, 4, 2, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
-    conv_1x1_3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     input_7_4_3 = tf.add(output_7_4,conv_1x1_3)
-    output_7_4_3 = tf.layers.conv2d_transpose(input_7_4_3, num_classes, 16, 8, padding='same', kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7_4_3 = tf.layers.conv2d_transpose(input_7_4_3, num_classes, 16, 8, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     return output_7_4_3
 tests.test_layers(layers)
@@ -169,6 +172,7 @@ def run():
         helper.save_inference_samples(runs_dir, data_dir, sess, image_shape, logits, keep_prob, image_input)
 
         # OPTIONAL: Apply the trained model to a video
+
 
 
 if __name__ == '__main__':
