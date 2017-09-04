@@ -9,10 +9,10 @@ from tensorflow.python.platform import gfile
 from tensorflow.core.protobuf import saved_model_pb2
 from tensorflow.python.util import compat
 
-EPOCHS = 25
-BATCH_SIZE = 1
+EPOCHS = 32
+BATCH_SIZE = 8
 KEEP_PROB = 0.5
-LEARNING_RATE = 0.0001
+LEARNING_RATE = 0.001
 
 # Check TensorFlow Version
 assert LooseVersion(tf.__version__) >= LooseVersion('1.0'), 'Please use TensorFlow version 1.0 or newer.  You are using {}'.format(tf.__version__)
@@ -64,16 +64,16 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    conv_1x1_7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    output_7 = tf.layers.conv2d_transpose(conv_1x1_7, num_classes, 4, 2, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7 = tf.layers.conv2d_transpose(conv_1x1_7, num_classes, 4, 2, padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
-    conv_1x1_4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     input_7_4 = tf.add(output_7,conv_1x1_4)
-    output_7_4 = tf.layers.conv2d_transpose(input_7_4, num_classes, 4, 2, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7_4 = tf.layers.conv2d_transpose(input_7_4, num_classes, 4, 2, padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
-    conv_1x1_3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv_1x1_3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
     input_7_4_3 = tf.add(output_7_4,conv_1x1_3)
-    output_7_4_3 = tf.layers.conv2d_transpose(input_7_4_3, num_classes, 16, 8, padding='same', kernel_initializer=tf.contrib.layers.xavier_initializer_conv2d(), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    output_7_4_3 = tf.layers.conv2d_transpose(input_7_4_3, num_classes, 16, 8, padding='same', kernel_initializer=tf.truncated_normal_initializer(stddev=0.01), kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
 
     return output_7_4_3
 tests.test_layers(layers)
